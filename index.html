@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>PastaDex - LoL</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>PastaDex - LoL</h1>
+
+    <div id="search-bar">
+        <input type="text" id="search-input" placeholder="Rechercher...">
+        <button id="search-button">Rechercher</button>
+        <button id="refresh-button">Refresh</button>
+    </div>
+
+
+    <div id="card-container"></div>
+
+    <script>
+
+        fetch('copypastas.json')
+            .then(response => response.json())
+            .then(data => {
+                // Récupérer le tableau d'éléments
+                const elements = data.elements;
+
+                // Sélectionner l'élément HTML qui contiendra les cartes
+                const cardContainer = document.getElementById('card-container');
+
+                // Parcourir les éléments et générer le code HTML pour chaque carte
+                elements.forEach(element => {
+                    // Créer une div pour la carte
+
+                    const card = `
+                    <div class="card" data-description="${element.description}">
+                        <h2>${element.titre}</h2>
+                        <p>${element.mini_description}</p>
+                        <button onclick="copyContent('${element.description}')">Copier le CP complet</button>
+                    </div>
+                    `;
+
+                    // Ajouter la carte à l'élément conteneur
+                    cardContainer.innerHTML += card;
+
+                });
+            })
+            .catch(error => {
+                console.log('Une erreur s\'est produite lors du chargement du fichier JSON :', error);
+            });
+
+
+        // Sélectionner l'élément de la barre de recherche
+        const searchInput = document.getElementById('search-input');
+
+        // Sélectionner l'élément du bouton de recherche
+        const searchButton = document.getElementById('search-button');
+
+        // Fonction de recherche
+        function searchElements() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const description = card.getAttribute('data-description').toLowerCase();
+                if (description.includes(searchTerm)) {
+                    card.style.display = 'block'; // Afficher la carte
+                } else {
+                    card.style.display = 'none'; // Masquer la carte
+                }
+            });
+        }
+
+        // Écouter l'événement de clic sur le bouton de recherche
+        searchButton.addEventListener('click', searchElements);
+
+        const refreshButton = document.getElementById('refresh-button');
+
+        // Fonction de rafraîchissement pour afficher la liste complète
+        function refreshElements() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.style.display = 'block'; // Afficher toutes les cartes
+            });
+            searchInput.value = ''; // Réinitialiser la valeur du champ de recherche
+        }
+
+        // Écouter l'événement de clic sur le bouton "Refresh"
+        refreshButton.addEventListener('click', refreshElements);
+
+        const copyContent = async (text) => {
+            try {
+                await navigator.clipboard.writeText(text);
+                console.log('Content copied to clipboard');
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+            }
+        }
+    </script>
+</body>
+
+</html>
