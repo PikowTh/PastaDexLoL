@@ -39,7 +39,7 @@
                     <div class="card">
                         <h2>${element.titre}</h2>
                         <p class="description">${element.description}</p>
-                        <button data-description="${element.description}" class="copyFullCP">Copier le CP complet</button>
+                        <button class="copyCompleteCP" data-description="${element.description}" onclick="{(e) => copyFullCP('${element.description}', e)}">Copier le CP complet</button>
                     </div>
                     `;
 
@@ -90,20 +90,21 @@
         // Écouter l'événement de clic sur le bouton "Refresh"
         refreshButton.addEventListener('click', refreshElements);
 
-        let copyBtns = document.querySelectorAll('.copyFullCP');
+        // let copyBtns = document.querySelectorAll('.copyCompleteCP');
 
-        copyBtns.forEach(function(element) {
-            element.addEventListener('click', function() {
-                let description = element.dataset.description;
-                console.log(description);
-            })
-            // element.onclick = () => {
-            //     let description = element.dataset.description;
-            //     console.log(description);
-            //     navigator.clipboard.writeText(description);
-            // }
-        });
-        
+        function copyFullCP(textToCopy, event) {
+            event.preventDefault();
+            navigator.clipboard.writeText(textToCopy);
+            console.log("copied");
+        }
+
+        // copyBtns.forEach(btn => {
+        //     btn.addEventListener('click', () => {
+        //         // navigator.clipboard.writeText(btn.getAttribute('data-description'));
+        //         console.log("copied");
+        //     });
+        // });
+
     </script>
 </body>
 
