@@ -36,10 +36,10 @@
                     // Créer une div pour la carte
 
                     const card = `
-                    <div class="card" data-description="${element.description}">
+                    <div class="card">
                         <h2>${element.titre}</h2>
-                        <p>${element.mini_description}</p>
-                        <button onclick="copyContent('${element.description}')">Copier le CP complet</button>
+                        <p class="description">${element.description}</p>
+                        <button data-description="${element.description}" class="copyFullCP">Copier le CP complet</button>
                     </div>
                     `;
 
@@ -64,7 +64,7 @@
             const searchTerm = searchInput.value.toLowerCase();
             const cards = document.querySelectorAll('.card');
             cards.forEach(card => {
-                const description = card.getAttribute('data-description').toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
                 if (description.includes(searchTerm)) {
                     card.style.display = 'block'; // Afficher la carte
                 } else {
@@ -90,14 +90,20 @@
         // Écouter l'événement de clic sur le bouton "Refresh"
         refreshButton.addEventListener('click', refreshElements);
 
-        const copyContent = async (text) => {
-            try {
-                await navigator.clipboard.writeText(text);
-                console.log('Content copied to clipboard');
-            } catch (err) {
-                console.error('Failed to copy: ', err);
-            }
-        }
+        let copyBtns = document.querySelectorAll('.copyFullCP');
+
+        copyBtns.forEach(function(element) {
+            element.addEventListener('click', function() {
+                let description = element.dataset.description;
+                console.log(description);
+            })
+            // element.onclick = () => {
+            //     let description = element.dataset.description;
+            //     console.log(description);
+            //     navigator.clipboard.writeText(description);
+            // }
+        });
+        
     </script>
 </body>
 

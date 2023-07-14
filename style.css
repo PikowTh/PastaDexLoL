@@ -1,19 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    background-color: whitesmoke;
+}
+
 #search-bar {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-  }
-  
-  #search-input {
+}
+
+#search-input {
     flex: 1;
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 3px;
     font-size: 14px;
-  }
-  
-  #search-bar button {
+}
+
+#search-bar button {
     margin-left: 10px;
     padding: 8px 16px;
     background-color: #007bff;
@@ -21,11 +31,11 @@
     border: none;
     border-radius: 3px;
     cursor: pointer;
-  }
-  
-  #search-bar button:hover {
+}
+
+#search-bar button:hover {
     background-color: #0056b3;
-  }
+}
 
 
 
@@ -39,10 +49,19 @@
     width: calc(25% - 20px);
     /* Pour afficher 4 cartes par ligne en mode PC */
     margin-bottom: 20px;
-    background-color: #f4f4f4;
+    background-color: white;
     border-radius: 5px;
     padding: 20px;
     box-sizing: border-box;
+}
+
+p {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.description {
+    text-overflow: ellipsis;
 }
 
 @media screen and (max-width: 1024px) {
